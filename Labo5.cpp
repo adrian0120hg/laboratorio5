@@ -25,3 +25,26 @@ Estudiante* crearEstudiante(int carnet, char nom[], float nota) {
     nuevo->nombre[i] = '\0';
     return nuevo;
 }
+Estudiante* insertar(Estudiante* raiz, int carnet, char nombre[], float nota) {
+    if (raiz == NULL) return crearEstudiante(carnet, nombre, nota);
+    if (carnet < raiz->carnet) {
+        raiz->izquierdo = insertar(raiz->izquierdo, carnet, nombre, nota);
+    } else if (carnet > raiz->carnet) {
+        raiz->derecho = insertar(raiz->derecho, carnet, nombre, nota);
+    }
+    return raiz;
+}
+
+void buscarEstudiante(Estudiante* raiz, int carnet) {
+    if (raiz == NULL) {
+        cout << "Estudiante no encontrado." << endl;
+        return;
+    }
+    if (raiz->carnet == carnet) {
+        cout << "Encontrado: " << raiz->nombre << " - Nota: " << raiz->nota << endl;
+    } else if (carnet < raiz->carnet) {
+        buscarEstudiante(raiz->izquierdo, carnet);
+    } else {
+        buscarEstudiante(raiz->derecho, carnet);
+    }
+}
